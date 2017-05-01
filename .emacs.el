@@ -2,6 +2,9 @@
 ;; General Setup
 ;; --------------
 
+;; load-path setting
+(setq load-path (append (list (expand-file-name "~/.elisp")) load-path))
+
 ;; start the emacsclient server
 ; (server-start)
 
@@ -51,7 +54,7 @@
 ;; ---------------
 ;; window size
 (setq default-frame-alist
-			(append '((width . 43) (height . 56)) default-frame-alist))
+			(append '((width . 100) (height . 56)) default-frame-alist))
 
 ;; no splash screen
 (setq inhibit-splash-screen t)
@@ -94,9 +97,9 @@
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
 (global-set-key "\C-xt" 'skk-tutorial)
-; (setq default-input-method "japanese-skk")
+(setq default-input-method "japanese-skk")
 (setq default-input-method nil)
-; (setq skk-large-jisyo "/usr/share/skk/SKK-JISYO.L")
+(setq skk-large-jisyo "/usr/share/skk/SKK-JISYO.L")
 (setq skk-preload t)
 
 ;; ---------------
@@ -113,15 +116,17 @@
 ;; -------------
 ;; Haskell mode
 ;; -------------
-(load "haskell-site-file")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'font-lock-mode)
-(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+(add-to-list 'load-path "~/.elisp/haskell-mode-2.8.0")
+(require 'haskell-mode)
+(require 'haskell-cabal)
+(add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+(add-to-list 'auto-mode-alist '("\\.lhs$" . literate-haskell-mode))
+(add-to-list 'auto-mode-alist '("\\.cabal\\'" . haskell-cabal-mode))
 
 ;; ----------------
 ;; imaxima & imath
 ;; ----------------
+;(add-to-list 'load-path "/usr/local/share/maxima/5.34.1/emacs")
 (autoload 'imaxima "imaxima" "Frontend of Maxima CAS" t)
 (autoload 'imath "imath" "Interactive Math mode" t)
 (autoload 'imath-mode "imath" "Interactive Math mode" t)
@@ -130,14 +135,64 @@
 ;; -------
 ;; Prolog
 ;; -------
-(require 'prolog)
-(add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
-(setq prolog-program-name "/usr/bin/gprolog")
-(setq prolog-consult-string "[user].\n")
+;(require 'prolog)
+;(add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
+;(setq prolog-program-name "/usr/bin/gprolog")
+;(setq prolog-consult-string "[user].\n")
 
 ;; ---------
 ;; Org-mode
 ;; ---------
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
+;(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+;(define-key global-map "\C-cl" 'org-store-link)
+;(define-key global-map "\C-ca" 'org-agenda)
+
+;; --------------
+;; Lilypond-mode
+;; --------------
+;(autoload 'LilyPond-mode "lilypond-mode" "LilyPond Editing Mode" t)
+;(add-to-list 'auto-mode-alist '("\\.ly$" . LilyPond-mode))
+;(add-to-list 'auto-mode-alist '("\\.ily$" . LilyPond-mode))
+;(add-hook 'LilyPond-mode-hook (lambda () (turn-on-font-lock)))
+
+;; -------
+;; AUCTeX
+;; -------
+(require 'tex-site)
+(require 'tex-jp)
+;(setq TeX-default-mode 'japanese-latex-mode)
+(setq japanese-TeX-command-default "pTeX")
+(setq japanese-LaTeX-command-default "pLaTeX")
+(setq japanese-LaTeX-default-style "jarticle")
+(setq kinsoku-limit 10)
+(setq LaTeX-indent-level 0)
+(setq LaTeX-item-indent 2)
+(setq TeX-output-view-style '(("^dvi$" "." "xdvi-ja '%d'")))
+(setq preview-image-type 'dvipng)
+;(add-hook 'LaTeX-mode-hook (function (lambda() (setq TeX-PDF-mode nil))))
+
+(add-hook 'LaTeX-mode-hook (function (lambda ()
+  (add-to-list 'TeX-command-list
+;    '("pTeX" "%(PDF)ptex %`%S%(PDFout)%(mode)%' %t"
+    '("pTeX" "ptex %`%S%(PDFout)%(mode)%' %t"
+     TeX-run-TeX nil (plain-tex-mode) :help "Run ASCII pTeX"))
+  (add-to-list 'TeX-command-list
+;    '("pLaTeX" "%(PDF)platex %`%S%(PDFout)%(mode)%' %t"
+    '("pLaTeX" "platex %`%S%(PDFout)%(mode)%' %t"
+     TeX-run-TeX nil (latex-mode) :help "Run ASCII pLaTeX"))
+  (add-to-list 'TeX-command-list
+    '("acroread" "acroread '%s.pdf' " TeX-run-command t nil))
+  (add-to-list 'TeX-command-list
+    '("pdf" "dvipdfmx -V 4 '%s' " TeX-run-command t nil))
+  (add-to-list 'TeX-command-list
+    '("View" "xdvi-ja '%d'" TeX-run-command t nil))
+)))
+(add-hook 'LaTeX-mode-hook '(lambda ()
+    (TeX-fold-mode 1)
+    (outline-minor-mode t)))
+;; extra outline headers 
+(setq TeX-outline-extra
+    '(("^\\\\begin{thebibliography}" 2)
+      ("^\\\\end{thebibliography}" 2)))
+
+(put 'downcase-region 'disabled nil)
