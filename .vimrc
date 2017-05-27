@@ -3,6 +3,7 @@ execute pathogen#infect()
 
 " general settings
 syntax on
+filetype on
 filetype plugin indent on
 
 if &compatible
@@ -11,7 +12,7 @@ endif
 
 set number
 set browsedir=buffer
-set backupdir=~/.vimbackup
+" set backupdir=~/.vimbackup
 set clipboard=unnamed
 set showmatch
 set smartcase
@@ -27,6 +28,26 @@ set softtabstop=4
 set shiftwidth=4
 set list
 set listchars=tab:\ \ ,eol:$
+
+set laststatus=2 " show status line always
+
+" lightline.vim and color scheme
+if !has('gui_running')
+  set t_Co=256
+endif
+
+let g:lightline = {
+  \ 'component': {
+  \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+  \ },
+  \ 'component_visible_condition': {
+  \   'readonly': '(&filetype!="help"&& &readonly)',
+  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
+  \ }}
+
+colorscheme kalisi
+set background=dark " or light
 
 " ???
 au BufEnter * execute ":lcd " . expand("%:p:h")
@@ -51,17 +72,8 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " vim2hs
-" set runtimepath+=$HOME/.vim/vim2hs
-
 " syntastic
-" set runtimepath+=$HOME/.vim/syntastic
-
 " vimproc
-" set runtimepath+=$HOME/.vim/vimproc.vim
-
 " VimShell
-" set runtimepath+=$HOME/.vim/vimshell.vim
-
 " idris-vim
-" set runtimepath+=$HOME/.vim/idris-vim
-
+"

@@ -16,3 +16,12 @@
 [submodule ".vim/bundle/syntastic"]
 	path = .vim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
+[submodule ".vim/bundle/idris-vim"]
+	path = .vim/bundle/idris-vim
+	url = https://github.com/idris-hackers/idris-vim.git
+[submodule ".vim/bundle/lightline.vim"]
+	path = .vim/bundle/lightline.vim
+	url = https://github.com/itchyny/lightline.vim.git
+[submodule ".vim/bundle/kalisi"]
+	path = .vim/bundle/kalisi
+	url = https://github.com/freeo/vim-kalisi
