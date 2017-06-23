@@ -1,7 +1,12 @@
 #!/bin/sh
 
-XKBSYMB = /usr/share/X11/xkb/symbols/
+XKBPATH=/usr/share/X11/xkb
+SYMB=symbols/
+EVDEV=rules/evdev
 
-cp jphenk $XKBSYMB
-cp jpmuhen $XKBSYMB
+cp jphenk "$XKBPATH/$SYMB"
+cp jpmuhen "$XKBPATH/$SYMB"
+
+cp "$XKBPATH/$EVDEV" "$XKBPATH/$EVDEV.bak"
+cat ./loc_evdev >> "$XKBPATH/$EVDEV"
 
