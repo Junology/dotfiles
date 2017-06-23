@@ -1,0 +1,27 @@
+// Eliminate Henkan, making it another Shift_R.
+partial modifier_keys
+xkb_symbols "rshift" {
+    replace key <HENK> { [ Shift_R, Shift_R ] };
+    modifier_map Shift { <HENK>, <RFSH> };
+};
+
+// Eliminate Henkan, making it another right Ctrl.
+partial modifier_keys
+xkb_symbols "rctrl" {
+    replace key <HENK> { [ Control_R, Control_R ] };
+    modifier_map Control { Control_R, <HENK> };
+};
+
+// Eliminate Henkan, making it another Escape.
+partial modifier_keys
+xkb_symbols "escape" {
+    replace key <HENK> { [ Escape, Escape] };
+};
+
+// Eliminate Henkan, making it another right Alt.
+partial modifier_keys
+xkb_symbols "ralt" {
+    replace key <HENK> { [ Alt_R, Meta_R ] };
+    modifier_map Mod1 { Alt_R, <HENK> };
+};
+
