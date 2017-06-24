@@ -3,11 +3,11 @@ To install, execute the following command:
 
 $ sudo ./install.sh
 
-The shell script copies two files jphenk and jpmuhen to the folder
+The shell script adds two files jphenk and jpmuhen into the folder
 
 /usr/share/X11/xkb/symbols/
 
-and add appropriate settings to the file "/usr/share/X11/xkb/rules/evdev".
+and adds appropriate settings to the file "/usr/share/X11/xkb/rules/evdev".
 After the installation, the following options will get available:
 
 - jphenk:rshift

@@ -7,6 +7,5 @@ EVDEV=rules/evdev
 cp jphenk "$XKBPATH/$SYMB"
 cp jpmuhen "$XKBPATH/$SYMB"
 
-cp "$XKBPATH/$EVDEV" "$XKBPATH/$EVDEV.bak"
-cat ./loc_evdev >> "$XKBPATH/$EVDEV"
+patch -u -N -b -z .bak "$XKBPATH/$EVDEV" < ./evdev.patch
 

@@ -13,7 +13,7 @@ xkb_symbols "rctrl" {
 };
 
 // Eliminate Henkan, making it another Escape.
-partial modifier_keys
+partial alphanumeric_keys
 xkb_symbols "escape" {
     replace key <HENK> { [ Escape, Escape] };
 };

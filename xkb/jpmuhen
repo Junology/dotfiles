@@ -13,7 +13,7 @@ xkb_symbols "lctrl" {
 };
 
 // Eliminate Muhenkan, making it another Escape.
-partial modifier_keys
+partial alphanumeric_keys
 xkb_symbols "escape" {
     replace key <MUHE> { [ Escape, Escape] };
 };
