@@ -195,4 +195,13 @@
     '(("^\\\\begin{thebibliography}" 2)
       ("^\\\\end{thebibliography}" 2)))
 
+;; -------
+;; RefTeX
+;; -------
+;; Turn on RefTeX in AUCTeX
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;; Activate nice interface between RefTeX and AUCTeX
+(setq reftex-plug-into-AUCTeX t)
+
 (put 'downcase-region 'disabled nil)
+
