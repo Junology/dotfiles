@@ -1,0 +1,23 @@
+Files to provide some options regarding Henkan and Muhenkan keys in Japanese keyboards.
+To install, execute the following command:
+
+$ sudo ./install.sh
+
+The shell script adds two files jphenk and jpmuhen into the folder
+
+/usr/share/X11/xkb/symbols/
+
+and adds appropriate settings to the file "/usr/share/X11/xkb/rules/evdev".
+After the installation, the following options will get available:
+
+- jphenk:rshift
+- jphenk:rctrl
+- jphenk:escape
+- jphenk:ralt
+- jpmuhen:lshift
+- jpmuhen:lctrl
+- jpmuhen:escape
+- jpmuhen:lalt
+
+You can write these options in "/org/gnome/desktop/input-sources/xkb-options" with, e.g., dconf.
+

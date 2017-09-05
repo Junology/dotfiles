@@ -1,0 +1,11 @@
+
+! option = symbols
+  jphenk:rshift  = +jphenk(rshift)
+  jphenk:rctrl   = +jphenk(rctrl)
+  jphenk:escape  = +jphenk(escape)
+  jphenk:ralt    = +jphenk(ralt)
+  jpmuhen:lshift = +jpmuhen(lshift)
+  jpmuhen:lctrl  = +jpmuhen(lctrl)
+  jpmuhen:escape = +jpmuhen(escape)
+  jpmuhen:lalt   = +jpmuhen(lalt)
+
