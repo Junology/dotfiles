@@ -46,7 +46,7 @@ let g:lightline = {
   \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
   \ }}
 
-colorscheme kalisi
+colorscheme hybrid
 set background=dark " or light
 
 " ???

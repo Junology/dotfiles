@@ -11,7 +11,7 @@
 ;; turn off the alarm bell
 (setq ring-bell-function 'ignore)
 
-;; バックアップ等を作成しない
+;; Do not create backup files
 (setq backup-inhibited t)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -40,8 +40,7 @@
 ;	  '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60))
 
 ;; クリップボードを共有
-(cond (window-system
-			 (setq x-select-enable-clipboard t)))
+(cond (window-system (setq x-select-enable-clipboard t)))
 
 ;; C-h as Backspace
 (global-set-key "\C-h" 'delete-backward-char)
@@ -49,12 +48,16 @@
 ;; C-x l で goto-line
 (define-key ctl-x-map "l" 'goto-line)
 
+;; downcase and upcase regions
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
 ;; ---------------
 ;; Window Setting
 ;; ---------------
 ;; window size
 (setq default-frame-alist
-			(append '((width . 100) (height . 56)) default-frame-alist))
+  (append '((width . 100) (height . 56)) default-frame-alist))
 
 ;; no splash screen
 (setq inhibit-splash-screen t)
@@ -68,9 +71,9 @@
 ;; font setting
 (when window-system (progn
   (set-default-font "Monospace-12")
-	(set-fontset-font (frame-parameter nil 'font)
-					  'japanese-jisx0208
-					  '("Takaoゴシック" . "unicode-bmp"))))
+    (set-fontset-font (frame-parameter nil 'font)
+                      'japanese-jisx0208
+                      '("Takaoゴシック" . "unicode-bmp"))))
 
 ;; フレームを縦分割したときの折り返し
 (setq truncate-partial-width-windows nil)
@@ -86,9 +89,17 @@
 (setq default-buffer-file-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-;; coding-system
-;;特に必要ないかも？
-(set-default-coding-systems 'utf-8)
+;; -----------------
+;; elisp repositories
+;;------------------
+(require 'package)
+;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize)
 
 ;; ------
 ;; ddskk
@@ -160,6 +171,7 @@
 ;; -------
 (require 'tex-site)
 (require 'tex-jp)
+(require 'font-latex)
 ;(setq TeX-default-mode 'japanese-latex-mode)
 (setq japanese-TeX-command-default "pTeX")
 (setq japanese-LaTeX-command-default "pLaTeX")
@@ -170,7 +182,6 @@
 (setq TeX-output-view-style '(("^dvi$" "." "xdvi-ja '%d'")))
 (setq preview-image-type 'dvipng)
 ;(add-hook 'LaTeX-mode-hook (function (lambda() (setq TeX-PDF-mode nil))))
-
 (add-hook 'LaTeX-mode-hook (function (lambda ()
   (add-to-list 'TeX-command-list
 ;    '("pTeX" "%(PDF)ptex %`%S%(PDFout)%(mode)%' %t"
@@ -185,8 +196,7 @@
   (add-to-list 'TeX-command-list
     '("pdf" "dvipdfmx -V 4 '%s' " TeX-run-command t nil))
   (add-to-list 'TeX-command-list
-    '("View" "xdvi-ja '%d'" TeX-run-command t nil))
-)))
+    '("View" "xdvi-ja '%d'" TeX-run-command t nil)))))
 (add-hook 'LaTeX-mode-hook '(lambda ()
     (TeX-fold-mode 1)
     (outline-minor-mode t)))
@@ -194,5 +204,3 @@
 (setq TeX-outline-extra
     '(("^\\\\begin{thebibliography}" 2)
       ("^\\\\end{thebibliography}" 2)))
-
-(put 'downcase-region 'disabled nil)

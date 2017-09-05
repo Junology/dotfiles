@@ -25,3 +25,18 @@
 [submodule ".vim/bundle/kalisi"]
 	path = .vim/bundle/kalisi
 	url = https://github.com/freeo/vim-kalisi
+[submodule ".vim/bundle/molokai"]
+	path = .vim/bundle/molokai
+	url = https://github.com/tomasr/molokai.git
+[submodule ".vim/bundle/gruvbox"]
+	path = .vim/bundle/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
+[submodule ".vim/bundle/vim-hybrid"]
+	path = .vim/bundle/vim-hybrid
+	url = https://github.com/w0ng/vim-hybrid.git
+[submodule ".vim/bundle/jellybeans.vim"]
+	path = .vim/bundle/jellybeans.vim
+	url = https://github.com/nanotech/jellybeans.vim.git
+[submodule ".vim/bundle/vim-colors-solarized"]
+	path = .vim/bundle/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized.git
