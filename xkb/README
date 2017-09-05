@@ -19,5 +19,6 @@ After the installation, the following options will get available:
 - jpmuhen:escape
 - jpmuhen:lalt
 
-You can write these options in "/org/gnome/desktop/input-sources/xkb-options" with, e.g., dconf.
+After the installation, one can write these options in "/org/gnome/desktop/input-sources/xkb-options" with, e.g., dconf.
+Alternatively, he can also edit the file "setxkbmap.desktop" and put it in ".config/autostart/".
 
