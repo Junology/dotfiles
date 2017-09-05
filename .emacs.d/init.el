@@ -181,7 +181,7 @@
 (setq LaTeX-item-indent 2)
 (setq TeX-output-view-style '(("^dvi$" "." "xdvi-ja '%d'")))
 (setq preview-image-type 'dvipng)
-;(add-hook 'LaTeX-mode-hook (function (lambda() (setq TeX-PDF-mode nil))))
+(add-hook 'LaTeX-mode-hook (function (lambda() (setq TeX-PDF-mode t))))
 (add-hook 'LaTeX-mode-hook (function (lambda ()
   (add-to-list 'TeX-command-list
 ;    '("pTeX" "%(PDF)ptex %`%S%(PDFout)%(mode)%' %t"
@@ -204,8 +204,6 @@
 (setq TeX-outline-extra
     '(("^\\\\begin{thebibliography}" 2)
       ("^\\\\end{thebibliography}" 2)))
-<<<<<<< HEAD:.emacs.el
-=======
 
 ;; -------
 ;; RefTeX
@@ -217,4 +215,3 @@
 
 (put 'downcase-region 'disabled nil)
 
->>>>>>> refs/remotes/origin/master:.emacs.d/init.el
