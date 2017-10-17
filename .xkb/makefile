@@ -1,17 +1,19 @@
-# Paths
+# Pahs
 XKBPATH=/usr/share/X11/xkb
-RULES=rules
-KEYMAP=keymaps
+RULESDIR=rules
+KEYMAPSDIR=keymaps
+AUTOSTARTDIR=$${HOME}/.config/autostart
 
 # Source files
-EVDEVGLB=${XKBPATH}/${RULES}/evdev
-EVDEVSRC=./${RULES}/jpext
-AUTOXKBCMD=xkbcomp.desktop
+EVDEVGLB=${XKBPATH}/${RULESDIR}/evdev
+EVDEVSRC=./${RULESDIR}/jpext
+AUTOXKBCMD=rc-xkbcomp.sh
 
 # Target files
 EVDEVLOC=evdev-local
-XKBSRC=./${KEYMAP}/userkbd
+XKBSRC=./${KEYMAPSDIR}/userkbd
 TARGET=${XKBSRC}.xkm
+AUTOSCRIPT=${AUTOSTARTDIR}/xkbcomp.desktop
 
 # Options passed to xkb
 # Edit the line as you like
@@ -20,26 +22,33 @@ XKBOPTS=ctrl:nocaps,jpmuhen:lshift,jphenk:rshift
 ${TARGET}: ${XKBSRC}
 	xkbcomp -I./ $< $@ 2> /dev/null
 
-${XKBSRC}: ./${RULES}/${EVDEVLOC}
+${XKBSRC}: ./${RULESDIR}/${EVDEVLOC}
 	setxkbmap -I./ -rules ${EVDEVLOC} -option ${XKBOPTS} -print > $@
 
-./${RULES}/${EVDEVLOC}: ${EVDEVGLB} ${EVDEVSRC}
+./${RULESDIR}/${EVDEVLOC}: ${EVDEVGLB} ${EVDEVSRC}
 	cat $^ > $@
 	cat $^.lst > $@.lst
 
 .PHONY: install uninstall clean patch
 install: ${AUTOXKBCMD} ${TARGET}
-	cp $< $${HOME}/.config/autostart/
+	echo "[Desktop Entry]" > ${AUTOSCRIPT}
+	echo "Type=Application" >> ${AUTOSCRIPT}
+	echo "Encoding=UTF-8" >> ${AUTOSCRIPT}
+	echo "Name=xkbcomp" >> ${AUTOSCRIPT}
+	echo "Exec=bash" $${HOME}/.xkb/${AUTOXKBCMD} >> ${AUTOSCRIPT}
+	echo "Hidden=false" >> ${AUTOSCRIPT}
+	echo "NoDisplay=false" >> ${AUTOSCRIPT}
+	echo "Comment=Enable some options passed to xkb involving to japanese keyboards" >> ${AUTOSCRIPT}
 
 uninstall:
-	${RM} $${HOME}/.config/autostart/${AUTOXKBCMD}
+	${RM} ${AUTOSCRIPT}
 
 clean:
-	${RM} ./${KEYMAP}/* ./${RULES}/${EVDEVLOC}* ./*.patch
+	${RM} ./${KEYMAPSDIR}/* ./${RULESDIR}/${EVDEVLOC}* ./*.patch
 
-patch: ./${RULES}/${EVDEVLOC} ./${RULES}/${EVDEVLOC}.lst
-	diff -u ${EVDEVGLB} ./${RULES}/${EVDEVLOC} \
+patch: ./${RULESDIR}/${EVDEVLOC} ./${RULESDIR}/${EVDEVLOC}.lst
+	diff -u ${EVDEVGLB} ./${RULESDIR}/${EVDEVLOC} \
 		> evdev.patch; [ $$? -eq 1 ]
-	diff -u ${EVDEVGLB}.lst ./${RULES}/${EVDEVLOC}.lst \
+	diff -u ${EVDEVGLB}.lst ./${RULESDIR}/${EVDEVLOC}.lst \
 		> evdev.lst.patch; [ $$? -eq 1 ]
 
