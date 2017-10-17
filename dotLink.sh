@@ -1,7 +1,8 @@
 #!/bin/sh
 
-ln -s ./dotfiles/.emacs.d $HOME/.emacs.d
-ln -s ./dotfiles/.vim $HOME/.vim
-ln -s ./dotfiles/.vimrc $HOME/.vimrc
-ln -s ./dotfiles/.gvimrc $HOME/.gvimrc
+ln -f -s ./dotfiles/.emacs.d $HOME/.emacs.d
+ln -f -s ./dotfiles/.vim $HOME/.vim
+ln -f -s ./dotfiles/.vimrc $HOME/.vimrc
+ln -f -s ./dotfiles/.gvimrc $HOME/.gvimrc
+ln -f -s ./dotfiles/.xkb $HOME/.xkb
 

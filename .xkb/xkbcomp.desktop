@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=xkbcomp
+Exec=xkbcomp -I$HOME/.xkb $HOME/.xkb/keymaps/userkbd.xkm $DISPLAY
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+
