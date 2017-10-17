@@ -1,14 +1,7 @@
-Files to provide some options regarding Henkan and Muhenkan keys in Japanese keyboards.
-To install, execute the following command:
+* Overview
 
-$ sudo ./install.sh
-
-The shell script adds two files jphenk and jpmuhen into the folder
-
-/usr/share/X11/xkb/symbols/
-
-and adds appropriate settings to the file "/usr/share/X11/xkb/rules/evdev".
-After the installation, the following options will get available:
+In this directory, there are files to provide some options through xkb regarding Henkan and Muhenkan keys in Japanese keyboards.
+After the installation, the following options will be available:
 
 - jphenk:rshift
 - jphenk:rctrl
@@ -19,6 +12,55 @@ After the installation, the following options will get available:
 - jpmuhen:escape
 - jpmuhen:lalt
 
-After the installation, one can write these options in "/org/gnome/desktop/input-sources/xkb-options" with, e.g., dconf.
-Alternatively, he can also edit the file "setxkbmap.desktop" and put it in ".config/autostart/".
+
+* Requirements
+
+- make
+
+
+* Installation
+
+Above all, you have to build necessary files with the following command
+
+$ make
+
+After that, you have two options below.
+
+1. Local install
+
+In this way, the user do not need to make any changes on system directories.
+Hence, it is often a better option, especially if you do not have sufficient permission or knowledge on the system.
+For this, first of all, place this folder as $HOME/.xkb.
+Then, you can edit makefile; probably, all you need is to change XKBOPTS variable.
+After that, just run the following command:
+
+$ make install
+
+After logging out/in, you get it.
+
+As for uninstall, type
+
+$ make uninstall
+
+and just delete $HOME/.xkb folder.
+
+
+2. Global install
+
+This way is potentially dangerous since it overwrites certain system files under /usr/share/X11/xkb/ directory.
+First, generate patch files for evdev and evdev.lst by
+
+$ make patch
+
+Next, run the installation script as root:
+
+$ sudo ./install-global.sh
+( or # ./install-global.sh in no sudo systems)
+
+The shell script copies two files jphenk and jpmuhen into the folder
+
+/usr/share/X11/xkb/symbols/
+
+and applies the patches to evdev and evdev.lst in /usr/share/X11/xkb/rules/.
+After that, one can write these options in, for example, "/org/gnome/desktop/input-sources/xkb-options" in dconf.
 
