@@ -68,13 +68,13 @@
   (interactive)
   (when (display-graphic-p)
 	(progn
-	  ;; use 120 char wide window for largeish displays
-	  ;; and smaller 80 column windows for smaller displays
-	  ;; pick whatever numbers make sense for you
-	  (if (> (x-display-pixel-width) 1280)
-		(add-to-list 'default-frame-alist (cons 'width 120))
-		(add-to-list 'default-frame-alist (cons 'width 80)))
-	  ;; for the height, subtract a couple hundred pixels
+      (add-to-list 'default-frame-alist
+                   (cons 'width (max 80 (/ (/ (x-display-pixel-width) 1.5)
+                                           (frame-char-width)))))
+;;	  (if (> (x-display-pixel-width) 1280)
+;;		(add-to-list 'default-frame-alist (cons 'width 100))
+;;		(add-to-list 'default-frame-alist (cons 'width 80)))
+    ;; for the height, subtract a couple hundred pixels
     ;; from the screen height (for panels, menubars and
     ;; whatnot), then divide by the height of a char to
     ;; get the height we want
@@ -111,9 +111,9 @@
 ;; elisp repositories
 ;;------------------
 (require 'package)
+(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 ;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -136,7 +136,7 @@
 ;; ---------------
 (defun my-c-mode-common-hook ()
   (c-set-style "linux")
-	(define-key c-mode-base-map "\C-m" 'newline-and-indent)
+	(define-key c-mode-base-map "\C-j" 'newline-and-indent)
   (setq tab-always-indent nil)
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 4)) ;; indent width
@@ -145,21 +145,19 @@
 ;; -------------
 ;; Haskell mode
 ;; -------------
-(add-to-list 'load-path "~/.elisp/haskell-mode-2.8.0")
-(require 'haskell-mode)
-(require 'haskell-cabal)
-(add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
-(add-to-list 'auto-mode-alist '("\\.lhs$" . literate-haskell-mode))
-(add-to-list 'auto-mode-alist '("\\.cabal\\'" . haskell-cabal-mode))
+;(require 'haskell-mode)
+;(require 'haskell-cabal)
+;(add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+;(add-to-list 'auto-mode-alist '("\\.lhs$" . literate-haskell-mode))
+;(add-to-list 'auto-mode-alist '("\\.cabal\\'" . haskell-cabal-mode))
 
 ;; ----------------
 ;; imaxima & imath
 ;; ----------------
-;(add-to-list 'load-path "/usr/local/share/maxima/5.34.1/emacs")
 (autoload 'imaxima "imaxima" "Frontend of Maxima CAS" t)
 (autoload 'imath "imath" "Interactive Math mode" t)
 (autoload 'imath-mode "imath" "Interactive Math mode" t)
-(setq imaxima-scale-factor 1.2)
+(setq imaxima-scale-factor 1.2) ;; TeX font size
 
 ;; -------
 ;; Prolog
@@ -172,9 +170,9 @@
 ;; ---------
 ;; Org-mode
 ;; ---------
-;(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;(define-key global-map "\C-cl" 'org-store-link)
-;(define-key global-map "\C-ca" 'org-agenda)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
 
 ;; --------------
 ;; Lilypond-mode
@@ -187,9 +185,9 @@
 ;; -------
 ;; AUCTeX
 ;; -------
-(require 'tex-site)
-(require 'tex-jp)
-(require 'font-latex)
+;(require 'tex-site)
+;(require 'tex-jp)
+;(require 'font-latex)
 ;(setq TeX-default-mode 'japanese-latex-mode)
 (setq japanese-TeX-command-default "pTeX")
 (setq japanese-LaTeX-command-default "pLaTeX")
@@ -202,15 +200,13 @@
 (add-hook 'LaTeX-mode-hook (function (lambda() (setq TeX-PDF-mode t))))
 (add-hook 'LaTeX-mode-hook (function (lambda ()
   (add-to-list 'TeX-command-list
-;    '("pTeX" "%(PDF)ptex %`%S%(PDFout)%(mode)%' %t"
     '("pTeX" "ptex %`%S%(PDFout)%(mode)%' %t"
      TeX-run-TeX nil (plain-tex-mode) :help "Run ASCII pTeX"))
   (add-to-list 'TeX-command-list
-;    '("pLaTeX" "%(PDF)platex %`%S%(PDFout)%(mode)%' %t"
     '("pLaTeX" "platex %`%S%(PDFout)%(mode)%' %t"
      TeX-run-TeX nil (latex-mode) :help "Run ASCII pLaTeX"))
   (add-to-list 'TeX-command-list
-    '("acroread" "acroread '%s.pdf' " TeX-run-command t nil))
+    '("xpdf" "acroread '%s.pdf' " TeX-run-command t nil))
   (add-to-list 'TeX-command-list
     '("pdf" "dvipdfmx -V 4 '%s' " TeX-run-command t nil))
   (add-to-list 'TeX-command-list
