@@ -55,6 +55,13 @@
 ;; ---------------
 ;; Window Setting
 ;; ---------------
+;; font setting
+(when (display-graphic-p) (progn
+  (set-default-font "Monospace-12")
+    (set-fontset-font (frame-parameter nil 'font)
+                      'japanese-jisx0208
+                      '("Takaoゴシック" . "unicode-bmp"))))
+
 ;; window size
 ;; ref: https://stackoverflow.com/questions/92971/how-do-i-set-the-size-of-emacs-window
 (defun set-frame-size-according-to-resolution ()
@@ -85,13 +92,6 @@
 
 ;; remove menu
 (menu-bar-mode -1)
-
-;; font setting
-(when (display-graphic-p) (progn
-  (set-default-font "Monospace-12")
-    (set-fontset-font (frame-parameter nil 'font)
-                      'japanese-jisx0208
-                      '("Takaoゴシック" . "unicode-bmp"))))
 
 ;; フレームを縦分割したときの折り返し
 (setq truncate-partial-width-windows nil)
