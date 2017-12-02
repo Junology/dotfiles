@@ -1,0 +1,11 @@
+! option
+  jphenk         Henkan key position
+  jphenk:rshift  Henkan as Right Shift
+  jphenk:rctrl   Henkan as Right Ctrl
+  jphenk:escape  Henkan as Escape
+  jphenk:ralt    Henkan as Right Alt
+  jpmuhen        Muhenkan key position
+  jpmuhen:lshift Muhenkan as Left Shift
+  jpmuhen:lctrl  Muhenkan as Left Ctrl
+  jpmuhen:escape Muhenkan as Escape
+  jpmuhen:lalt   Muhenkan as Left Alt
