@@ -37,3 +37,17 @@
 ;; downcase and upcase regions
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
+;; tabbar.el
+;; in Debian/Ubuntu, it is contained in "emacs-goodies-el" package.
+(when (require 'tabbar nil :noerror)
+  (progn
+	(setq tabbar-use-image nil)
+	(defun my-tabbar-buffer-groups ()
+	  (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
+				  ((eq major-mode 'dired-mode) "emacs")
+				  (t "user"))))
+	(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+	(global-set-key (kbd "<C-tab>") 'tabbar-forward-tab)
+	(global-set-key (kbd "<C-iso-lefttab>") 'tabbar-backward-tab)
+	(tabbar-mode)))
