@@ -22,8 +22,8 @@
   (define-key c-mode-base-map "\C-j" 'newline-and-indent)
   (when is-company-loaded
 	(progn
-	  (define-key c-mode-map "\C-c tab" 'company-complete)
-	  (define-key c++-mode-map "\C-c tab" 'company-complete)))
+	  (define-key c-mode-map (kbd "C-c <tab>") 'company-complete)
+	  (define-key c++-mode-map (kbd "C-c <tab>") 'company-complete)))
   (setq tab-always-indent nil)
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 4)) ;; indent width
