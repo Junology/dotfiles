@@ -1,4 +1,4 @@
 #!/bin/sh
 
-xkbcomp -I$HOME/.xkb $HOME/.xkb/keymaps/userkbd.xkm $DISPLAY
+xkbcomp -w0 -I$HOME/.xkb -R$HOME/.xkb $HOME/.xkb/keymaps/userkbd.xkm $DISPLAY
 
