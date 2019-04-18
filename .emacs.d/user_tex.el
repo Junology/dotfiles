@@ -39,4 +39,14 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 ;; Activate nice interface between RefTeX and AUCTeX
 (setq reftex-plug-into-AUCTeX t)
+;; found at StackOverflow https://stackoverflow.com/questions/9682592/setting-up-reftex-tab-completion-in-emacs
+(defun get-bibtex-keys (file)
+  (with-current-buffer (find-file-noselect file)
+    (mapcar 'car (bibtex-parse-keys))))
+
+(defun LaTeX-add-all-bibitems-from-bibtex ()
+  (interactive)
+  (mapc 'LaTeX-add-bibitems
+        (apply 'append
+               (mapcar 'get-bibtex-keys (reftex-get-bibfile-list)))))
 
