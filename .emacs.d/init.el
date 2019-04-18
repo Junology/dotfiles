@@ -9,8 +9,8 @@
 (require 'package)
 (add-to-list 'package-archives
 			 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-;(add-to-list 'package-archives
-;			 '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives
+			 '("melpa" . "http://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -64,7 +64,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(company-irony irony idris-mode lua-mode flycheck company))))
+	(lsp-haskell lsp-mode lsp-ui company-ghc ghc intero haskell-mode company-irony irony idris-mode lua-mode flycheck company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

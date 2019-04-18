@@ -24,6 +24,7 @@
                (tab-always-indent . t)
                (c-basic-offset . 4)
                (c-offsets-alist . ((inline-open . 0)
+								   (innamespace . 0)
 								   (member-init-intro . +)
 								   (member-init-cont . c-indent-multi-line-block)
                                    (statement-case-open . +)))))
@@ -36,24 +37,33 @@
 	  (define-key c++-mode-map (kbd "C-c <tab>") 'company-complete))))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
+;; -------------------
+;; Haskell IDE Engine
+;; -------------------
+(when (and (require 'lsp-mode nil :noerror)
+		   (require 'lsp-ui nil :noerror)
+		   (require 'lsp-haskelll nil :noerror))
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (add-hook 'haskell-mode-hook #'lsp-haskell-enable)
+  (add-hook 'haskell-mode-hook 'flycheck-mode))
 ;; -------------
 ;; Haskell mode
 ;; -------------
-(when (and (require 'haskell-mode nil :noerror)
-		   (require 'haskell-cabal nil :noerror))
-  (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
-  (add-to-list 'auto-mode-alist '("\\.lhs$" . literate-haskell-mode))
-  (add-to-list 'auto-mode-alist '("\\.cabal\\'" . haskell-cabal-mode))
-  (defun my-haskell-mode-hook ()
-	(interactive)
-	(turn-on-haskell-indentation)
-	(turn-on-haskell-doc-mode)
-	(font-lock-mode)
-	(setq haskell-program-name "/usr/bin/ghci")
-	(inf-haskell-mode)
-	(ghc-init)
-	(flycheck-mode))
-  (add-hook 'haskell-mode-hook 'my-haskell-mode-hook))
+;(when (and (require 'haskell-mode nil :noerror)
+;		   (require 'haskell-cabal nil :noerror))
+;  (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+;  (add-to-list 'auto-mode-alist '("\\.lhs$" . literate-haskell-mode))
+;  (add-to-list 'auto-mode-alist '("\\.cabal\\'" . haskell-cabal-mode))
+;  (defun my-haskell-mode-hook ()
+;	(interactive)
+;	(turn-on-haskell-indentation)
+;	(turn-on-haskell-doc-mode)
+;	(font-lock-mode)
+;	(setq haskell-program-name "/usr/bin/ghci")
+;	(inf-haskell-mode)
+;	(ghc-init)
+;	(flycheck-mode))
+;  (add-hook 'haskell-mode-hook 'my-haskell-mode-hook))
 ;;  (add-hook ’haskell-mode-hook ’interactive-haskell-mode))
 
 ;; --------
