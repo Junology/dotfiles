@@ -24,6 +24,7 @@
                (tab-always-indent . t)
                (c-basic-offset . 4)
                (c-offsets-alist . ((inline-open . 0)
+								   (inextern-lang . 0)
 								   (innamespace . 0)
 								   (member-init-intro . +)
 								   (member-init-cont . c-indent-multi-line-block)
@@ -40,12 +41,14 @@
 ;; -------------------
 ;; Haskell IDE Engine
 ;; -------------------
-(when (and (require 'lsp-mode nil :noerror)
+(when (and (require 'lsp nil :noerror)
 		   (require 'lsp-ui nil :noerror)
-		   (require 'lsp-haskelll nil :noerror))
+		   (require 'lsp-haskell nil :noerror))
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (add-hook 'haskell-mode-hook #'lsp)
   (add-hook 'haskell-mode-hook #'lsp-haskell-enable)
   (add-hook 'haskell-mode-hook 'flycheck-mode))
+
 ;; -------------
 ;; Haskell mode
 ;; -------------

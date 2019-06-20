@@ -13,7 +13,7 @@
 (setq LaTeX-item-indent 2)
 (setq TeX-output-view-style '(("^dvi$" "." "xdvi-ja '%d'")))
 (setq preview-image-type 'dvipng)
-(add-hook 'LaTeX-mode-hook (function (lambda() (setq TeX-PDF-mode t))))
+(add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
 (add-hook 'LaTeX-mode-hook (function (lambda ()
   (add-to-list 'TeX-command-list
     '("pTeX" "ptex %`%S%(PDFout)%(mode)%' %t"
@@ -28,8 +28,10 @@
   (add-to-list 'TeX-command-list
     '("View" "xdvi-ja '%d'" TeX-run-command t nil)))))
 (add-hook 'LaTeX-mode-hook '(lambda ()
-    (TeX-fold-mode 1)
-    (outline-minor-mode t)))
+  (setq TeX-PDF-mode t)
+  (TeX-fold-mode 1)
+  (setq prettify-symbols-unprettify-at-point t)
+  (outline-minor-mode t)))
 ;; extra outline headers 
 (setq TeX-outline-extra
     '(("^\\\\begin{thebibliography}" 2)
