@@ -37,6 +37,11 @@
     '(("^\\\\begin{thebibliography}" 2)
       ("^\\\\end{thebibliography}" 2)))
 
+;; shell-escape enabled using file local variable
+(with-eval-after-load 'tex
+  (add-to-list 'safe-local-variable-values
+               '(TeX-command-extra-options . "-shell-escape")))
+
 ;; Turn on RefTeX in AUCTeX
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 ;; Activate nice interface between RefTeX and AUCTeX

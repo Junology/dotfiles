@@ -1,17 +1,18 @@
-;; -------
-;; general
-;; -------
-(defconst is-company-loaded (require 'company nil :noerror))
-(when is-company-loaded
-  (progn
-	(add-hook 'after-init-hook 'global-company-mode)
-	(setq company-backends (delete 'company-semantics company-backends))))
+;; ---------
+;; General
+;; ---------
+(defconst is-yasnippet-loaded (require 'yasnippet nil :noerror))
 
 ;; ---------------
 ;; C/C++ Language
 ;; ---------------
-(when (require 'irony nil :noerror)
-  (progn 
+(when (and (require 'company nil :noerror)
+		   (require 'irony nil :noerror))
+  (progn
+	;; Setting for company-mode
+	(add-hook 'after-init-hook 'global-company-mode)
+	(setq company-backends (delete 'company-semantics company-backends))
+	;; Setting for irony-mode
 	(add-hook 'c++-mode-hook 'irony-mode)
 	(add-hook 'c-mode-hook 'irony-mode)
 	(add-hook 'objc-mode-hook 'irony-mode)
@@ -38,16 +39,22 @@
 	  (define-key c++-mode-map (kbd "C-c <tab>") 'company-complete))))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
+;; --------
+;; Intero
+;; --------
+(when (require 'intero nil :noerror)
+  (add-hook 'haskell-mode-hook 'intero-mode))
+
 ;; -------------------
 ;; Haskell IDE Engine
 ;; -------------------
-(when (and (require 'lsp nil :noerror)
-		   (require 'lsp-ui nil :noerror)
-		   (require 'lsp-haskell nil :noerror))
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  (add-hook 'haskell-mode-hook #'lsp)
-  (add-hook 'haskell-mode-hook #'lsp-haskell-enable)
-  (add-hook 'haskell-mode-hook 'flycheck-mode))
+; (setq lsp-haskell-process-path-hie "hie-wrapper")
+;(when (and (require 'lsp nil :noerror)
+;		   (require 'lsp-ui nil :noerror)
+;		   (require 'lsp-haskell nil :noerror))
+;  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;  (add-hook 'haskell-mode-hook #'lsp)
+;  (add-hook 'haskell-mode-hook 'flycheck-mode))
 
 ;; -------------
 ;; Haskell mode
