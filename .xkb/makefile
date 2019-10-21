@@ -20,6 +20,7 @@ AUTOSCRIPT=${AUTOSTARTDIR}/xkbcomp.desktop
 XKBOPTS=ctrl:nocaps,jpmuhen:lshift,jphenk:rshift
 
 ${TARGET}: ${XKBSRC}
+	mkdir -p ./${KEYMAPSDIR}
 	xkbcomp -I./ $< $@ 2> /dev/null
 
 ${XKBSRC}: ./${RULESDIR}/${EVDEVLOC}
@@ -31,6 +32,7 @@ ${XKBSRC}: ./${RULESDIR}/${EVDEVLOC}
 
 .PHONY: install uninstall clean patch
 install: ${AUTOXKBCMD} ${TARGET}
+	test -d ${AUTOSTARTDIR} || mkdir ${AUTOSTARTDIR}
 	echo "[Desktop Entry]" > ${AUTOSCRIPT}
 	echo "Type=Application" >> ${AUTOSCRIPT}
 	echo "Encoding=UTF-8" >> ${AUTOSCRIPT}
