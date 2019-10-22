@@ -14,6 +14,10 @@
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+;; Fix broken connection to elpa in emacs 26.1 and 26.2
+(when (and (eq emacs-major-version 26)
+		   (< emacs-minor-version 3))
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 (package-initialize)
 
 ;; load-path setting
@@ -64,7 +68,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(intero yaml-mode langtool haskell-snippets yasnippet lsp-haskell lsp-mode lsp-ui company-irony irony idris-mode lua-mode flycheck company))))
+	(auctex company-bibtex company-irony-c-headers company-reftex flycheck-haskell haskell-mode intero yaml-mode langtool haskell-snippets yasnippet lsp-haskell lsp-mode lsp-ui company-irony irony idris-mode lua-mode flycheck company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
