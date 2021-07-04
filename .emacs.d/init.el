@@ -5,6 +5,11 @@
 ;; start the emacsclient server
 ; (server-start)
 
+;; Auto-generated codes should be separated.
+(setq custom-file (expand-file-name "~/.config/emacs/custom-file.el"))
+(load-file custom-file)
+
+
 ;; Package repositories
 (require 'package)
 (add-to-list 'package-archives
@@ -14,6 +19,10 @@
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+;; Fix broken connection to elpa in emacs 26.1 and 26.2
+(when (and (eq emacs-major-version 26)
+		   (< emacs-minor-version 3))
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 (package-initialize)
 
 ;; load-path setting
@@ -100,37 +109,4 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
-;; ---------------------------------
-;; Auto-generated codes from here
-;; ---------------------------------
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(LaTeX-indent-environment-list
-   (quote
-    (("verbatim" current-indentation)
-     ("verbatim*" current-indentation)
-     ("tabular" LaTeX-indent-tabular)
-     ("tabular*" LaTeX-indent-tabular)
-     ("align")
-     ("align*")
-     ("array" LaTeX-indent-tabular)
-     ("eqnarray" LaTeX-indent-tabular)
-     ("eqnarray*" LaTeX-indent-tabular)
-     ("displaymath")
-     ("equation")
-     ("equation*")
-     ("picture")
-     ("tabbing"))))
- '(package-selected-packages
-   (quote
-    (flycheck-plantuml plantuml-mode company-coq company-lean lean-mode dockerfile-mode auctex gnu-elpa-keyring-update company-irony-c-headers flycheck-irony intero yaml-mode langtool haskell-snippets yasnippet lsp-haskell lsp-mode lsp-ui company-irony irony idris-mode lua-mode flycheck company)))
- '(send-mail-function (quote mailclient-send-it)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
