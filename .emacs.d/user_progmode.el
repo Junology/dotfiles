@@ -1,42 +1,58 @@
 ;; ---------
 ;; General
 ;; ---------
+; yasnippet
 (defconst is-yasnippet-loaded (require 'yasnippet nil :noerror))
+; Do not use tab to indent texts
+(setq indent-tabs-mode nil)
 
 ;; ---------------
 ;; C/C++ Language
 ;; ---------------
 (when (and (require 'company nil :noerror)
-		   (require 'irony nil :noerror))
+           (require 'irony nil :noerror)
+           (require 'company-irony-c-headers))
   (progn
-	;; Setting for company-mode
-	(add-hook 'after-init-hook 'global-company-mode)
-	(setq company-backends (delete 'company-semantics company-backends))
-	;; Setting for irony-mode
-	(add-hook 'c++-mode-hook 'irony-mode)
-	(add-hook 'c-mode-hook 'irony-mode)
-	(add-hook 'objc-mode-hook 'irony-mode)
-	(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-    (add-to-list 'company-backends 'company-irony)))
+    ;; company
+    (add-hook 'after-init-hook 'global-company-mode)
+    (setq company-backends (delete 'company-semantics company-backends))
+    ;; Setting Irony
+    (add-hook 'c++-mode-hook 'irony-mode)
+    (add-hook 'c-mode-hook 'irony-mode)
+    (add-hook 'objc-mode-hook 'irony-mode)
+    (defun add-company-backend-irony ()
+      (setq-local company-backends
+                  (append '((company-irony-c-headers company-irony))
+                          company-backends)))
+    (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+    (add-hook 'c++-mode-hook 'add-company-backend-irony)
+    (add-hook 'c-mode-hook 'add-company-backend-irony)
+    ;; Setting of flycheck
+    (add-hook 'c++-mode-hook 'flycheck-mode)
+    (add-hook 'c-mode-hook 'flycheck-mode)
+    (add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+    (setq flycheck-clang-language-standard "c++17")))
 
 (c-add-style "my-style"
              '("linux"
                (indent-tabs-mode . nil)
                (tab-always-indent . t)
                (c-basic-offset . 4)
-               (c-offsets-alist . ((inline-open . 0)
-								   (inextern-lang . 0)
-								   (innamespace . 0)
-								   (member-init-intro . +)
-								   (member-init-cont . c-indent-multi-line-block)
-                                   (statement-case-open . +)))))
+               (c-offsets-alist
+                . ((inline-open . 0)
+                   (inextern-lang . 0)
+                   (innamespace . 0)
+                   (member-init-intro . +)
+                   (member-init-cont . c-indent-multi-line-block)
+                   (statement-case-open . +)))))
 (defun my-c-mode-common-hook ()
   (c-set-style "my-style")
   (define-key c-mode-base-map "\C-j" 'newline-and-indent)
-  (when is-company-loaded
-	(progn
-	  (define-key c-mode-map (kbd "C-c <tab>") 'company-complete)
-	  (define-key c++-mode-map (kbd "C-c <tab>") 'company-complete))))
+  (when (require 'company nil :noerror)
+    (progn
+      (define-key c-mode-map (kbd "C-c <tab>") 'company-complete)
+      (define-key c++-mode-map (kbd "C-c <tab>") 'company-complete))))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 ;; --------
@@ -76,6 +92,16 @@
 ;  (add-hook 'haskell-mode-hook 'my-haskell-mode-hook))
 ;;  (add-hook ’haskell-mode-hook ’interactive-haskell-mode))
 
+;; ----------
+;; PlantUML
+;; ----------
+(when (require 'plantuml-mode nil :noerror)
+  (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+  (setq plantuml-default-exec-mode 'executable)
+  (setq plantuml-output-type "svg")
+  (add-hook 'plantuml-mode-hook 'flycheck-mode))
+
+
 ;; --------
 ;; Idris
 ;; -------
@@ -85,6 +111,22 @@
     (font-lock-mode)
     (flycheck-mode))
   (add-hook 'idris-mode-hook 'my-idris-mode-hook))
+
+;; ------
+;; Lean
+;; ------
+(when (require 'lean-mode nil :noerror)
+  (defun my-lean-mode-hook ()
+	(when (boundp 'company-mode)
+	  (define-key lean-mode-map (kbd "C-c <tab>") #'company-complete)))
+	  ;; (global-set-key (kbd "S-SPC") #'company-complete)))
+  (add-hook 'lean-mode-hook 'my-lean-mode-hook))
+
+;; ----
+;; Coq
+;; ----
+(setq proof-site-file-path "/usr/share/emacs/site-lisp/proofgeneral/generic/proof-site.el")
+(load proof-site-file-path t) ; no warning/error when the file doesn't exist.
 
 ;; -------
 ;; Prolog

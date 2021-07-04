@@ -1,6 +1,13 @@
 ;; ---------------
 ;; Window Setting
 ;; ---------------
+
+;; misc
+(setq inhibit-splash-screen t)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(setq truncate-partial-width-windows nil)
+
 ;; font setting
 (when (display-graphic-p) (progn
   (set-default-font "Monospace-12")
@@ -21,21 +28,26 @@
 (defconst workarea-width (nth 3 workarea-list))
 (defconst workarea-height (nth 4 workarea-list))
 
-(defun set-frame-size-according-to-resolution ()
+(defconst suggested-width
+  (truncate (max (/ workarea-width 1.5)
+				 (* 80 (frame-char-width)))))
+(defconst suggested-height
+  (- workarea-height 20))
+
+(defun set-default-frame-size-according-to-resolution ()
   (interactive)
   (when (display-graphic-p)
 	(progn
-      (add-to-list 'default-frame-alist
-                   (cons 'width (max 80 (/ (/ workarea-width 1.5)
-                                           (frame-char-width)))))
-	  (add-to-list 'default-frame-alist 
-				   (cons 'height (/ (- workarea-height 20)
-									(frame-char-height)))))))
+	  (setq default-frame-alist
+			'(
+              (width . (text-pixels . suggested-width))
+			  (height . (text-pixels . suggested-height)))))))
 
-(set-frame-size-according-to-resolution)
+(when (display-graphic-p)
+  (progn
+	(set-default-frame-size-according-to-resolution)
+	(set-frame-size (selected-frame) suggested-width suggested-height t)))
 
-;; misc
-(setq inhibit-splash-screen t)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(setq truncate-partial-width-windows nil)
+(when (require 'image-mode nil :noerror)
+  (setq image-auto-resize "fit-width"))
+

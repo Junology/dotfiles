@@ -4,21 +4,12 @@
 [submodule ".vim/bundle/skk.vim"]
 	path = .vim/bundle/skk.vim
 	url = https://github.com/tyru/skk.vim.git
-[submodule ".vim/bundle/vim2hs"]
-	path = .vim/bundle/vim2hs
-	url = https://github.com/dag/vim2hs.git
 [submodule ".vim/bundle/vimproc.vim"]
 	path = .vim/bundle/vimproc.vim
 	url = https://github.com/Shougo/vimproc.vim.git
-[submodule ".vim/bundle/ghcmod-vim"]
-	path = .vim/bundle/ghcmod-vim
-	url = https://github.com/eagletmt/ghcmod-vim.git
 [submodule ".vim/bundle/syntastic"]
 	path = .vim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
-[submodule ".vim/bundle/idris-vim"]
-	path = .vim/bundle/idris-vim
-	url = https://github.com/idris-hackers/idris-vim.git
 [submodule ".vim/bundle/lightline.vim"]
 	path = .vim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim.git
