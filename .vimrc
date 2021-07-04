@@ -48,6 +48,7 @@ let g:lightline = {
 
 colorscheme hybrid
 set background=dark " or light
+hi MatchParen cterm=bold ctermbg=none ctermfg=blue
 
 " ???
 au BufEnter * execute ":lcd " . expand("%:p:h")
