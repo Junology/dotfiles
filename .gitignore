@@ -1,4 +1,4 @@
 # ignore
 .emacs.d/*
 !.emacs.d/*.el
-
+.emacs.d/custom.el
