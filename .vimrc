@@ -1,25 +1,21 @@
-" Pathogen package manager
-execute pathogen#infect()
+" Common settings even available in vim.tiny
+set nocompatible
 
-" general settings
-syntax on
+"encoding
+set encoding=utf-8
+scriptencoding utf-8 
+set fileencoding=utf-8
+set fileencodings=utf-8
+
 filetype on
 filetype plugin indent on
 
-if &compatible
-  set nocompatible
-endif
-
 set number
-set browsedir=buffer
-" set backupdir=~/.vimbackup
 set clipboard=unnamed
+set browsedir=buffer
 set showmatch
 set smartcase
 set whichwrap=b,s,h,l,<,>,[,]
-
-" set laststatus=2
-
 set autoindent
 set smartindent
 set tabstop=4
@@ -29,9 +25,20 @@ set shiftwidth=4
 set list
 set listchars=tab:\ \ ,eol:$
 
-set laststatus=2 " show status line always
+set laststatus=2 " always show status line
+set statusline=%{mode()}:\ %<%f\ %h%m%r%=%-14.(%l/%L,%c%V%)\ [%{toupper(&ft)},%{&fileencoding}]
+	
+" Skip the following in vim.tiny
+if 0 | endif
 
-" lightline.vim and color scheme
+" Colorscheme
+colorscheme slate
+set background=dark
+
+" syntax highlight
+syntax on
+
+" lightline.vim
 if !has('gui_running')
   set t_Co=256
 endif
@@ -46,9 +53,6 @@ let g:lightline = {
   \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
   \ }}
 
-colorscheme hybrid
-set background=dark " or light
-
 " ???
 au BufEnter * execute ":lcd " . expand("%:p:h")
 
@@ -60,20 +64,3 @@ let skk_keep_state=0
 let skk_egg_like_newline=1
 let skk_show_annotation=1
 let skk_use_face=1
-
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" vim2hs
-" syntastic
-" vimproc
-" VimShell
-" idris-vim
-"
