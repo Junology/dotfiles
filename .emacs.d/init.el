@@ -61,7 +61,17 @@
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-
-;; Custom configuration file
-(custom-set-variables '(custom-file (expand-file-name "custom.el" user-emacs-directory)))
-(load-user-file "custom.el")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+	(auctex company-bibtex company-irony-c-headers company-reftex flycheck-haskell haskell-mode intero yaml-mode langtool haskell-snippets yasnippet lsp-haskell lsp-mode lsp-ui company-irony irony idris-mode lua-mode flycheck company))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

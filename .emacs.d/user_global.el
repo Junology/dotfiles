@@ -16,8 +16,6 @@
 ;; Keybinds
 (keyboard-translate ?\C-h ?\C-?) ;; C-h as Backspace
 (define-key ctl-x-map "l" 'goto-line) ;; C-x l as goto-line
-(global-unset-key (kbd "C-x C-l")) ;; Disable lowercase region
-(global-unset-key (kbd "C-x C-u")) ;; Disable uppercase region
 
 ;; Editor
 (setq scroll-conservatively 2)

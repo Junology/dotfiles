@@ -1,36 +1,41 @@
 ;; ---------------
 ;; Window Setting
 ;; ---------------
-(when (display-graphic-p)
-  (progn
-	;; Fonts
-	(create-fontset-from-ascii-font "DejaVu Sans Mono 16"nil "DejaVu_MPlusM_Noto")
-	(set-fontset-font "fontset-DejaVu_MPlusM_Noto"
-					  'unicode
-					  (font-spec :family "DejaVu Sans Mono" :size 16))
-	(set-fontset-font "fontset-DejaVu_MPlusM_Noto"
-					  'unicode
-					  (font-spec :family "M+ 1m" :size 16)
-					  nil 'append)
-	(set-fontset-font "fontset-DejaVu_MPlusM_Noto"
-					  'unicode (font-spec :family "Noto Sans Mono" :size 16)
-					  nil 'append)
-	(add-to-list 'default-frame-alist
-				 '(font . "fontset-DejaVu_MPlusM_Noto"))
-	;; Frame size
-	(add-to-list 'default-frame-alist
-				 (cons 'width (cons 'text-pixels (max (* 88 (frame-char-width)) (/ (x-display-pixel-width) 1.5)))))
-	(add-to-list 'default-frame-alist 
-				 (cons 'height (cons 'text-pixels (- (x-display-pixel-height) 20))))
-	(setq-default left-fringe-width 10)
-	(set-window-buffer nil (current-buffer))
-	;; Display line numbers
-	(global-display-line-numbers-mode)
-	(custom-set-faces
-	 '(line-number ((t (:inherit (shadow default) :background "midnight blue" :foreground "white"))))
-	 '(line-number-current-line ((t (:inherit line-number :background "firebrick" :foreground "white" :weight bold)))))
-	;; misc
-	(setq inhibit-splash-screen t)
-	(tool-bar-mode -1)
-	(menu-bar-mode -1)
-	(setq truncate-partial-width-windows nil)))
+;; font setting
+(when (display-graphic-p) (progn
+  (set-default-font "Monospace-12")
+    (set-fontset-font (frame-parameter nil 'font)
+                      'japanese-jisx0208
+                      '("Takaoゴシック" . "unicode-bmp"))))
+
+;; Compute a better frame size from the display resolution
+(defvar workarea-list
+  (assq 'workarea (car (display-monitor-attributes-list))))
+(unless workarea-list
+  (lambda ()
+	(setq workarea-list
+		  (0 0 (x-display-pixel-width) (x-display-pixel-height)))))
+
+(defconst workarea-left (nth 1 workarea-list))
+(defconst workarea-top (nth 2 workarea-list))
+(defconst workarea-width (nth 3 workarea-list))
+(defconst workarea-height (nth 4 workarea-list))
+
+(defun set-frame-size-according-to-resolution ()
+  (interactive)
+  (when (display-graphic-p)
+	(progn
+      (add-to-list 'default-frame-alist
+                   (cons 'width (max 80 (/ (/ workarea-width 1.5)
+                                           (frame-char-width)))))
+	  (add-to-list 'default-frame-alist 
+				   (cons 'height (/ (- workarea-height 20)
+									(frame-char-height)))))))
+
+(set-frame-size-according-to-resolution)
+
+;; misc
+(setq inhibit-splash-screen t)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(setq truncate-partial-width-windows nil)
