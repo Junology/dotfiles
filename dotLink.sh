@@ -1,7 +1,10 @@
 #!/bin/sh
 
-ln -f -s ./dotfiles/.emacs.d $HOME/.emacs.d
-ln -f -s ./dotfiles/.vimrc $HOME/.vimrc
-ln -f -s ./dotfiles/.gvimrc $HOME/.gvimrc
-ln -f -s ./dotfiles/.xkb $HOME/.xkb
+BASEDIR=`dirname "$0"`
+RELPATH=`realpath -s --relative-to="$HOME" "$BASEDIR"`
+
+ln -f -s $RELPATH/.emacs.d $HOME/.emacs.d
+ln -f -s $RELPATH/.vimrc $HOME/.vimrc
+ln -f -s $RELPATH/.gvimrc $HOME/.gvimrc
+ln -f -s $RELPATH/.xkb $HOME/.xkb
 
