@@ -19,7 +19,7 @@
 				 '(font . "fontset-DejaVu_MPlusM_Noto"))
 	;; Frame size
 	(add-to-list 'default-frame-alist
-				 (cons 'width (cons 'text-pixels (max (* 88 (frame-char-width)) (/ (x-display-pixel-width) 1.5)))))
+				 (cons 'width (cons 'text-pixels (max (* 120 (frame-char-width)) (/ (x-display-pixel-width) 1.5)))))
 	(add-to-list 'default-frame-alist 
 				 (cons 'height (cons 'text-pixels (- (x-display-pixel-height) 20))))
 	(setq-default left-fringe-width 10)

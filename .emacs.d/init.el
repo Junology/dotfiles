@@ -64,4 +64,4 @@
 
 ;; Custom configuration file
 (custom-set-variables '(custom-file (expand-file-name "custom.el" user-emacs-directory)))
-(load-user-file "custom.el")
+(load (expand-file-name "custom.el" user-emacs-directory) t)
