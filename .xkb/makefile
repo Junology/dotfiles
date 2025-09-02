@@ -20,10 +20,10 @@ AUTOSCRIPT=${AUTOSTARTDIR}/xkbcomp.desktop
 XKBOPTS=ctrl:nocaps,jpmuhen:lshift,jphenk:rshift
 
 ${TARGET}: ${XKBSRC}
-	mkdir -p ./${KEYMAPSDIR}
 	xkbcomp -I./ $< $@ 2> /dev/null
 
 ${XKBSRC}: ./${RULESDIR}/${EVDEVLOC}
+	mkdir -p ./${KEYMAPSDIR}
 	setxkbmap -I./ -rules ${EVDEVLOC} -option ${XKBOPTS} -print > $@
 
 ./${RULESDIR}/${EVDEVLOC}: ${EVDEVGLB} ${EVDEVSRC}
